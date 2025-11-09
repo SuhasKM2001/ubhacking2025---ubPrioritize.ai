@@ -1,11 +1,11 @@
-// services/llmService.js
 import {
   GoogleGenAI,
   createUserContent,
 } from "@google/genai";
+import 'dotenv/config';
 
 const genAI = new GoogleGenAI({
-  apiKey: apiKey,
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 /**

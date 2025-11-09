@@ -52,9 +52,8 @@ Strictly return JSON in the below format:
     `;
 
     const result = await callGemini(prompt);
-    console.log("Gemini response:", result);
     const plan = extractJson(result);
-    res.json({plan });
+    res.json({plan});
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
