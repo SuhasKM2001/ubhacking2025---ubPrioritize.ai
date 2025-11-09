@@ -1,36 +1,12 @@
 import { callGemini } from "../services/llmServices.js";
-
-const dummySubjects = [
-  {
-    title: "Machine Learning",
-    classes: ["Mon 10:00-11:30", "Wed 14:00-16:00"],
-    assignments: [{ title: "HW1 Regression", due: "2025-11-15" }],
-    quizzes: [{ title: "Quiz1", due: "2025-11-12" }],
-  },
-  {
-    title: "Computer Security",
-    classes: ["Tue 09:00-10:30", "Thu 15:00-16:30"],
-    assignments: [{ title: "Exploit Writeup", due: "2025-11-20" }],
-    quizzes: [],
-  },
-  {
-    title: "DIC",
-    classes: ["Mon 13:00-14:30", "Fri 10:00-12:00"],
-    assignments: [{ title: "Data Modeling Project", due: "2025-11-25" }],
-    quizzes: [{ title: "Quiz1", due: "2025-11-18" }],
-  },
-  {
-    title: "Algorithms",
-    classes: ["Wed 10:00-11:30", "Thu 12:00-13:00"],
-    assignments: [{ title: "HW4 Graphs", due: "2025-11-14" }],
-    quizzes: [{ title: "Quiz2", due: "2025-11-13" }],
-  },
-];
+import { getUserStudyContextByEmail } from '../dataAccess.js';
 
 export async function askStudyBot(req, res) {
   try {
     const body = req.body ?? {};
     const question = (body.question ?? "").trim();
+    const email = 'ava@buffalo.edu'
+    const ctx = await getUserStudyContextByEmail(email);
 
     if (!question) {
       return res.status(400).json({ error: "question is required" });
@@ -53,8 +29,21 @@ You are a concise, practical study coach.
 
 CONTEXT
 - now (America/New_York): ${nowStr}
-- subjects & upcoming work:
-${JSON.stringify(dummySubjects, null, 2)}
+
+USER
+${JSON.stringify(ctx.user, null, 2)}
+
+CLASS SCHEDULE (fixed busy blocks)
+${JSON.stringify(ctx.classSchedule ?? [], null, 2)}
+
+ASSIGNMENTS (with due dates)
+${JSON.stringify(ctx.courseAssignments ?? [], null, 2)}
+
+STUDENT PART-TIME SHIFTS (fixed busy blocks)
+${JSON.stringify(ctx.studentPartTime ?? [], null, 2)}
+
+UNIVERSITY EVENTS & ORGS (may be busy or optional)
+${JSON.stringify(ctx.eventsAndOrgs ?? [], null, 2)}
 
 USER QUESTION
 "${question}"
@@ -62,13 +51,13 @@ USER QUESTION
 INSTRUCTIONS
 - Answer in plain text only (no JSON, no markdown).
 - Be brief and actionable: 3–6 bullet-style lines (use dashes).
-- If the question is vague (e.g., "what should I study?"), pick the top 2–3 most urgent/relevant tasks based on due dates and typical difficulty (e.g., quizzes/exams soon, assignments due sooner).
-- For each suggestion, include: what to do, approx time (45–60 min blocks), and why (due soon / priority / class alignment).
-- If today is packed, suggest the next best time slot to study.
-- Avoid inventing new subjects or tasks not listed above.
+- Prioritize by urgency (sooner due dates, upcoming quizzes/exams, heavy classes).
+- For each bullet: what to do, ~45–60 min focus block(s), and why (due soon / class alignment / prep).
+- Avoid inventing subjects or tasks not present in the context.
+- If today is already packed (busy blocks overlap), suggest the next best time to study this week.
 `.trim();
 
-    const answer = await callGemini(prompt); // returns plain string
+    const answer = await callGemini(prompt); 
     return res.json({ answer: (answer || "").trim() });
   } catch (err) {
     console.error("askStudyBot error:", err);

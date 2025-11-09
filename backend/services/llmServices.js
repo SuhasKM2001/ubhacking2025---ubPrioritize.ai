@@ -6,6 +6,7 @@ import 'dotenv/config';
 
 const genAI = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
+  // apiKey: "AIzaSyB5yuTzz-36TsJA40NU8tId-SCzJvnckt4"
 });
 
 /**

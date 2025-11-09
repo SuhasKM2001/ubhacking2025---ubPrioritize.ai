@@ -1,54 +1,47 @@
 import { callGemini, extractJson } from "../services/llmServices.js";
+import { getUserStudyContextByEmail } from '../dataAccess.js';
+
 export async function buildWeekSchedule(req, res) {
   try {
     const { priorities, priorityScope } = req.body;
-
-    const dummySubjects = [
-      {
-        title: "Machine Learning",
-        classes: ["Mon 10:00-11:30", "Wed 14:00-16:00"],
-        assignments: [{ title: "HW1 Regression", due: "2025-11-15" }],
-        quizzes: [{ title: "Quiz1", due: "2025-11-12" }],
-      },
-      {
-        title: "Computer Security",
-        classes: ["Tue 09:00-10:30", "Thu 15:00-16:30"],
-        assignments: [{ title: "Exploit Writeup", due: "2025-11-20" }],
-        quizzes: [],
-      },
-      {
-        title: "DIC",
-        classes: ["Mon 13:00-14:30", "Fri 10:00-12:00"],
-        assignments: [{ title: "Data Modeling Project", due: "2025-11-25" }],
-        quizzes: [{ title: "Quiz1", due: "2025-11-18" }],
-      },
-      {
-        title: "Algorithms",
-        classes: ["Wed 10:00-11:30", "Thu 12:00-13:00"],
-        assignments: [{ title: "HW4 Graphs", due: "2025-11-14" }],
-        quizzes: [{ title: "Quiz2", due: "2025-11-13" }],
-      },
-    ];
-
-    const prompt = `
+    const email = 'ava@buffalo.edu'
+    const ctx = await getUserStudyContextByEmail(email);
+    
+const prompt = `
 You are a university study planner.
-The user has priorities task:
-${JSON.stringify(priorities, null, 2)}
 
-Here is their subject data:
-${JSON.stringify(dummySubjects, null, 2)}
+User:
+${JSON.stringify(ctx.user, null, 2)}
+
+Student part-time shifts (fixed busy blocks):
+${JSON.stringify(ctx.studentPartTime, null, 2)}
+
+University events & orgs (busy or optional blocks; include type and description):
+${JSON.stringify(ctx.eventsAndOrgs, null, 2)}
+
+Class schedule (fixed class blocks):
+${JSON.stringify(ctx.classSchedule, null, 2)}
+
+Assignments (generate focused study blocks ahead of dueAt):
+${JSON.stringify(ctx.courseAssignments, null, 2)}
+
+User priority tasks:
+${JSON.stringify(priorities, null, 2)}
 
 - Priority Scope: "${priorityScope}"  (can be "today" or "week")
 
 Create a one-week schedule (Mon–Sun) that:
-- Includes the provided class blocks.
-- Adds focused study blocks for assignments and quiz/exam preparation.
-- If priorityScope is "today", prioritize and schedule the user's priority tasks for the current day. For the rest of the week, schedule normally without special priority task.
-- If priorityScope is "week", prioritize and schedule the user's priority tasks across the entire week.
-- Allocates time according to the user's prioritiesText by creating a new task.
+- Includes fixed busy blocks from classSchedule and studentPartTime.
+- Adds study blocks for assignments and quiz/exam preparation before due dates.
+- If priorityScope is "today", schedule user priority tasks today; otherwise spread across the week.
+- Avoid overlaps with fixed busy blocks.
+- Use the user's timezone if provided; otherwise assume America/New_York.
 
-Strictly return JSON in the below format:
-{ "title": 'title_name', "start": 'Nov 8, 2025, 10:00 AM', end: 'Nov 8, 2025, 11:30 AM' }
+STRICTLY return a JSON array of events with this shape:
+[
+  { "title": "title_name", "start": "Nov 8, 2025, 10:00 AM", "end": "Nov 8, 2025, 11:30 AM" },
+  ...
+]
     `;
 
     const result = await callGemini(prompt);
