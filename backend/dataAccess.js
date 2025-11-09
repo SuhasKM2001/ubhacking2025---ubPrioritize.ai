@@ -48,7 +48,7 @@ export async function getUserStudyContextByEmail(email) {
 
   const { ubitName, ubNumber } = user;
 
-  const [partTime, events, assignments, classTT] = await Promise.all([
+  const [partTime, events, assignments, classTT, priorityDocs] = await Promise.all([
     db.collection('student_partTime').find({ $or: [{ ubitName }, { ubNumber }] })
       .project({ _id: 0, start: 1, end: 1, ubitName: 1, ubNumber: 1 }).toArray(),
     db.collection('ubevents_orgs').find({ $or: [{ ubitName }, { ubNumber }] })
@@ -57,6 +57,8 @@ export async function getUserStudyContextByEmail(email) {
       .project({ _id: 0, name: 1, dueAt: 1 }).toArray(),
     db.collection('ublearns_classTT').find({}) // adjust if you can filter further
       .project({ _id: 0, title: 1, start: 1, end: 1, courseCode: 1, section: 1, term: 1 }).toArray(),
+    db.collection('priority_task').find({ email })
+      .project({ _id: 0, title: 1, start: 1, end: 1, startISO: 1, endISO: 1, source: 1, dayKey: 1, timezone: 1 }).toArray(),
   ]);
 
   console.log('[ctx] email=%s ubit=%s ub#=%s | partTime=%d events=%d assignments=%d classTT=%d',
@@ -93,5 +95,15 @@ export async function getUserStudyContextByEmail(email) {
     term: c.term,
   }));
 
-  return { user, studentPartTime, eventsAndOrgs, courseAssignments, classSchedule };
+  const priorities = (priorityDocs || []).map(p => ({
+    title: p.title || 'Study Session',
+    startISO: p.startISO, // Already in ISO format from DB
+    endISO: p.endISO,     // Already in ISO format from DB
+    startRaw: p.start,    // Keep formatted string for fallback
+    endRaw: p.end,        // Keep formatted string for fallback
+    source: p.source,
+    dayKey: p.dayKey,
+  }));
+
+  return { user, studentPartTime, eventsAndOrgs, courseAssignments, classSchedule, priorities };
 }

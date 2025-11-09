@@ -46,7 +46,18 @@ export async function getUserSchedules(req, res) {
       kind: 'event',
     }));
 
-    const all = [...classes, ...partTime, ...events];
+  const priorities = (ctx.priorities || []).map(p => ({
+    title: p.title || 'Study Session',
+    startISO: p.startISO,
+    endISO: p.endISO,
+    startRaw: p.start,
+    endRaw: p.end,
+    source: p.source,
+    dayKey: p.dayKey,
+  }));
+    
+
+    const all = [...classes, ...partTime, ...events, ...priorities];
 
     const sortable = all.filter(e => e.startISO);
     const unsortable = all.filter(e => !e.startISO);

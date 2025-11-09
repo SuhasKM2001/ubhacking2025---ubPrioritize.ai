@@ -9,7 +9,8 @@ const PORT = 8000;
 
 const allowedOrigins = [
   'http://localhost:8080',
-  'https://ub-calendar-hub.onrender.com'
+  'https://ub-calendar-hub.onrender.com',
+  
 ];
 
 const corsOptions = {
