@@ -11,7 +11,7 @@ const genAI = new GoogleGenAI({
 /**
  * Call Gemini with a plain text prompt. Returns raw text.
  * @param {string} prompt
- * @param {string} model default "gemini-2.5-flash"
+ * @param {string} model
  * @returns {Promise<string>}
  */
 export async function callGemini(prompt, model = "gemini-2.5-flash") {
