@@ -1,0 +1,10 @@
+[{
+  "_id": {
+    "$oid": "690fb88366aeecf04bb3854d"
+  },
+  "name": "UB ACM",
+  "createdAt": {
+    "$date": "2025-11-08T21:39:15.464Z"
+  },
+  "type": "academic"
+}]

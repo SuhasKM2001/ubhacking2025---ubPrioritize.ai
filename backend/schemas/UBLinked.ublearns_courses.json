@@ -1,0 +1,41 @@
+[{
+  "_id": {
+    "$oid": "690fab25a53a4e894f6fa8a8"
+  },
+  "courseCode": "CSE 587",
+  "title": "Data-Intensive Computing",
+  "term": "Fall 2025"
+},
+{
+  "_id": {
+    "$oid": "690fb09fa53a4e894f6fa8af"
+  },
+  "courseCode": "CSE 574",
+  "title": "Machine Learning",
+  "term": "Fall 2025",
+  "subjects": [
+    "ML"
+  ]
+},
+{
+  "_id": {
+    "$oid": "690fb09fa53a4e894f6fa8b0"
+  },
+  "courseCode": "CSE 531",
+  "title": "Design & Analysis of Algorithms",
+  "term": "Fall 2025",
+  "subjects": [
+    "Algo"
+  ]
+},
+{
+  "_id": {
+    "$oid": "690fb09fa53a4e894f6fa8b1"
+  },
+  "courseCode": "CSE 565",
+  "title": "Computer Security",
+  "term": "Fall 2025",
+  "subjects": [
+    "Computer Security"
+  ]
+}]

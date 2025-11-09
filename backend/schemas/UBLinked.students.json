@@ -1,0 +1,36 @@
+[{
+  "_id": {
+    "$oid": "690fa5c4a53a4e894f6fa8a6"
+  },
+  "firstName": "Ava",
+  "lastName": "Shah",
+  "email": "ava@buffalo.edu",
+  "program": "MS CS",
+  "cohortTerm": "Fall 2025",
+  "createdAt": {
+    "$date": "2025-11-08T20:18:58.662Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-08T20:27:50.726Z"
+  },
+  "ubNumber": "50123456",
+  "ubitName": "pnemade"
+},
+{
+  "_id": {
+    "$oid": "690faa2ca53a4e894f6fa8a7"
+  },
+  "firstName": "Ravi",
+  "lastName": "Kumar",
+  "email": "rkumar@buffalo.edu",
+  "program": "MS CS",
+  "cohortTerm": "Fall 2025",
+  "ubitName": "rkumar3",
+  "ubNumber": "50234567",
+  "createdAt": {
+    "$date": "2025-11-08T20:38:04.562Z"
+  },
+  "updatedAt": {
+    "$date": "2025-11-08T20:38:04.562Z"
+  }
+}]

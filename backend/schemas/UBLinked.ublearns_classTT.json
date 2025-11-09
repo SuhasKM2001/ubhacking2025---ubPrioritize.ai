@@ -1,0 +1,122 @@
+[{
+  "_id": {
+    "$oid": "690fb650a53a4e894f6fa8b2"
+  },
+  "studentId": {
+    "$oid": "690fa5c4a53a4e894f6fa8a6"
+  },
+  "courseCode": "CSE 587",
+  "section": "A",
+  "title": "Data Intensive Computing",
+  "term": "Fall 2025",
+  "credits": 3,
+  "instructors": [
+    "TBD"
+  ],
+  "timezone": "America/New_York",
+  "meetings": [
+    {
+      "days": [
+        "Mon",
+        "Wed",
+        "Fri"
+      ],
+      "startTime": "10:00",
+      "endTime": "10:50",
+      "building": "Natural Sciences Complex",
+      "room": "201",
+      "location": "NSC 201"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "690fb650a53a4e894f6fa8b3"
+  },
+  "studentId": {
+    "$oid": "690fa5c4a53a4e894f6fa8a6"
+  },
+  "courseCode": "CSE 565",
+  "section": "A",
+  "title": "Computer Security",
+  "term": "Fall 2025",
+  "credits": 3,
+  "instructors": [
+    "TBD"
+  ],
+  "timezone": "America/New_York",
+  "meetings": [
+    {
+      "days": [
+        "Tue",
+        "Thu"
+      ],
+      "startTime": "09:30",
+      "endTime": "10:50",
+      "building": "Natural Sciences Complex",
+      "room": "201",
+      "location": "NSC 201"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "690fb650a53a4e894f6fa8b4"
+  },
+  "studentId": {
+    "$oid": "690fa5c4a53a4e894f6fa8a6"
+  },
+  "courseCode": "CSE 574",
+  "section": "D",
+  "title": "Intro Machine Learning",
+  "term": "Fall 2025",
+  "credits": 3,
+  "instructors": [
+    "TBD"
+  ],
+  "timezone": "America/New_York",
+  "meetings": [
+    {
+      "days": [
+        "Tue",
+        "Thu"
+      ],
+      "startTime": "12:30",
+      "endTime": "13:50",
+      "building": "Knox Lecture Hall",
+      "room": "110",
+      "location": "Knox 110"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "690fb650a53a4e894f6fa8b5"
+  },
+  "studentId": {
+    "$oid": "690fa5c4a53a4e894f6fa8a6"
+  },
+  "courseCode": "CSE 531",
+  "section": "B",
+  "title": "Algorithms Anal & Dsgn 1",
+  "term": "Fall 2025",
+  "credits": 3,
+  "instructors": [
+    "TBD"
+  ],
+  "timezone": "America/New_York",
+  "meetings": [
+    {
+      "days": [
+        "Mon",
+        "Wed",
+        "Fri"
+      ],
+      "startTime": "14:00",
+      "endTime": "14:50",
+      "building": "Norton Hall",
+      "room": "190",
+      "location": "Norton 190"
+    }
+  ]
+}]

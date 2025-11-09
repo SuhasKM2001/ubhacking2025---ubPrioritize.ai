@@ -1,0 +1,13 @@
+[{
+  "_id": {
+    "$oid": "690fab42a53a4e894f6fa8aa"
+  },
+  "courseId": {
+    "$oid": "690fab25a53a4e894f6fa8a8"
+  },
+  "assignmentId": "A1",
+  "name": "Hadoop Basics",
+  "dueAt": {
+    "$date": "2025-11-15T23:59:00.000Z"
+  }
+}]
